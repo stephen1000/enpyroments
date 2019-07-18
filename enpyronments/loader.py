@@ -78,8 +78,10 @@ class Loader:
         """
         keys = module.__dict__.keys()
         for key in keys:
+            # skip over attributes that look like builtins
             if re.match(self.builtin_pattern, key):
                 continue
+            # skip any attributes that don't look like our regex
             if not re.match(self.attribute_pattern, key):
                 continue
             yield key
@@ -91,6 +93,7 @@ class Loader:
             settings_by_module {dict} -- settings dictionary
         """
         def get_mode_setting(name):
+            """ Helper function to pull the mode setting from the settings dict """
             if name in settings_by_module:
                 return settings_by_module[name].get(MODE)
             return None
