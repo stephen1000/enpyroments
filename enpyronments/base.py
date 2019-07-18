@@ -1,4 +1,6 @@
-from utils import Sensitive
+import os
+
+from enpyronments.utils import Sensitive
 
 
 class Settings(dict):
@@ -12,3 +14,20 @@ class Settings(dict):
         if isinstance(val, Sensitive):
             return val.obj
         return val
+
+    def get(self, key, default=None):
+        """ Same as dict.get, but extracts the value of Sensitive type elements """
+        try:
+            val = self[key]
+        except KeyError:
+            return default
+
+        if isinstance(val, Sensitive):
+            return val.obj
+
+        return val
+        
+
+    def save_to_environ(self):
+        """Saves the current state of settings to the environment via os.environ"""
+        os.environ.update(self)
