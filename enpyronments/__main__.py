@@ -12,5 +12,3 @@ settings = loader.load_settings(settings_dir)
 print("unsafe:", json.dumps(settings, indent=4))
 print("safe:", json.dumps(settings.masked(), indent=4))
 
-for item in settings.items():
-    pass
