@@ -88,6 +88,10 @@ In production, we'd have:
 And we can access those in the code in just a few lines:
 
 ```python
+# main.py
+
+from enpyronments.loader import Loader
+
 app_dir = "sample_app"
 settings_dir = "sample_settings"
 root = os.path.join(os.path.dirname(__file__), app_dir)
