@@ -2,7 +2,7 @@ import sys
 from contextlib import contextmanager
 
 
-class UsePath:
+class UsePath():
     """Quick class to use as a context manager when importing from a relative path. While in this manager's context,
     avoid making changes to sys.path, as this manager inserts a value at the first position on enter, and removes
     whichever element is in that position on exit.
@@ -18,7 +18,7 @@ class UsePath:
         sys.path.pop(0)
 
 
-class Sensitive(str):
+class Sensitive():
     """Flags settings as sensitive, overriding their __str__ method to make accidental disclosure more difficult
     """
 
