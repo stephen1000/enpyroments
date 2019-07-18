@@ -1,4 +1,4 @@
-# Enpyroments
+# enpyronments
 
 **A Django/Node inspired environment settings library for the Python user on the go.**
 
@@ -6,7 +6,7 @@
 
 # Overview
 
-Enpyroments is a fully configurable tool for abstracting away the hassle of configuration files.
+enpyronments is a fully configurable tool for abstracting away the hassle of configuration files.
 
 Here's some use cases:
 
@@ -24,7 +24,7 @@ And that's it! No external dependencies!
 
 Install using `pip` (eventually.....)
 
-    pip install enpyroments
+    pip install enpyronments
 
 # Example Application
 
@@ -57,7 +57,7 @@ You'll notice there's 6 different settings files. Here's what each is doing:
 In development, our settings will look like:
 
     {
-        "APP_NAME": "enpyroments",
+        "APP_NAME": "enpyronments",
         "LINES_TO_PRINT": 5,
         "MODE": "dev",
         "DEBUG": true,
@@ -72,7 +72,7 @@ In development, our settings will look like:
 In production, we'd have:
 
     {
-        "APP_NAME": "enpyroments",
+        "APP_NAME": "enpyronments",
         "LINES_TO_PRINT": 20,
         "MODE": "prod",
         "WELCOME_MESSAGE": "Welcome to Jurrasic Park!",
@@ -136,7 +136,7 @@ MESSAGE =  f'{dt.date.today():%x}: test message please ignore'
 
 Ok, that's easy enough, but now we've got two different versions of our settings.py file. How do we choose which one should be in our repository?
 
-That's where enpyroments comes in. We'll get started by creating a folder for all of our different settings to go in to. Where you place the folder is up to you, but next to the code, in the same repository is a good idea.
+That's where enpyronments comes in. We'll get started by creating a folder for all of our different settings to go in to. Where you place the folder is up to you, but next to the code, in the same repository is a good idea.
 
 So our new setup looks like this:
 
@@ -177,12 +177,12 @@ from . import env
 MESSAGE =  f'{dt.datetime.today():%x}: {env.MESSAGE}'
 ```
 
-We can load those into our app with enpyroments:
+We can load those into our app with enpyronments:
 
 ```python
 # src\main.py
 
-from enpyroments.loader import Loader
+from enpyronments.loader import Loader
 
 loader = Loader('path/to/parent/dir')
 settings = Loader.load_settings('configuration')

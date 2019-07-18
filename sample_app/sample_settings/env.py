@@ -1,4 +1,4 @@
-APP_NAME = "enpyroments"
+APP_NAME = "enpyronments"
 
 LINES_TO_PRINT = 20
 
