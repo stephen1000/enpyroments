@@ -121,7 +121,7 @@ loader = Loader('path/to/parent/dir')
 settings = Loader.load_settings('configuration')
 
 for _ in range(settings.LINES_TO_PRINT):
-    print(MESSAGE)
+    print(settings.MESSAGE)
 ```
 
 That's all fine and dandy, but maybe you want to pull a message from an external source using something like requests. That's pretty easily done:
@@ -138,7 +138,7 @@ comic_title = data.get('title')
 if comic_title:
     MESSAGE = f"Today's xkcd is called '{comic_title}'"
 else:
-    MESSAGE = f"Sorry, we couldn't load the comic :("
+    MESSAGE = f"Sorry, we couldn't load the title of today's xkcd :("
 ```
 
 And lastly (or more likely beforehand), you'll probably want to make sure you don't track the localized settings in your repository, so add them to your .gitignore:
