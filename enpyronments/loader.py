@@ -3,8 +3,8 @@ import re
 from glob import glob
 from importlib import import_module
 
-from base import Settings
-from utils import UsePath
+from enpyronments.settings import Settings
+from enpyronments.utils import UsePath
 
 default_prefix = "env"
 default_ext = ".py"
