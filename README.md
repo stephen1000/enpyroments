@@ -4,6 +4,10 @@
 
 ---
 
+# <In Development>
+
+Please note that this project is still very much in alpha, so a lot of things will be broken / untested until a more stable build exists.
+
 # Overview
 
 enpyronments is a fully configurable tool for abstracting away the hassle of configuration files.
