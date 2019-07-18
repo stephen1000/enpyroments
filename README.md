@@ -93,6 +93,8 @@ And our users would just have to modify the env_local.py file to change the sett
 ```python
 # configuration\env_local.py
 
+import datetime as dt
+
 MESSAGE =  f'{dt.date.today():%x}: test message please ignore'
 ```
 
