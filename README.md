@@ -26,7 +26,73 @@ Install using `pip` (eventually.....)
 
     pip install enpyroments
 
-# Example
+# Example Application
+
+Here is a walkthrough of the provided sample setup for an app with two modes, "dev" and "prod":
+
+    sample_app\
+        main.py
+        sample_settings\
+            env_dev_local.py
+            env_dev.py
+            env_local.py
+            env_prod_local.py
+            env_prod.py
+            env.py
+
+You'll notice there's 6 different settings files. Here's what each is doing:
+
+- env.py: Default application settings that you track in your repository. Could contain settings like APP_NAME, TARGET_URL, JSON_PAYLOAD, LOGGING_CONFIG, etc.
+
+- env_local.py: Primarily used to determine the local environment's MODE (i.e. if we're running in development, we'd have MODE="dev"). Can be used for sensitive information in apps that don't need different modes, as well. These will override any settings found in env.py
+
+- env_dev.py: Settings for when we're in development mode. We can do things like set SEND_MAIL=False, to indicate that we won't be sending out emails while we're working on the app. These override any settings found in env.py.
+
+- env_dev_local.py: Settings for our local development machine. Things like database connection strings or account credentials can be set here (make sure you don't track these in source control!!!!). If you want to use those settings, but don't want them stored in a file, you can use os.environ to pull them from the operating system's environment variables.
+
+- env_prod.py: Same as env_dev.py, but for production.
+
+- env_prod_local.py: Same as env_dev_local.py, but for production.
+
+In development, our settings will look like:
+
+    {
+        "APP_NAME": "enpyroments",
+        "LINES_TO_PRINT": 5,
+        "MODE": "dev",
+        "DEBUG": true,
+        "DEBUG_EMAIL_ADDRESS": "foo@bar.baz",
+        "WELCOME_MESSAGE": "ayyy whattup",
+        "SECRET_KEY": "hey man dont steal my secret key",
+        "EMAIL_SERVER_LOGIN": "my_username",
+        "EMAIL_SERVER_PASSWORD": "my_password",
+        "SECRET_NUMBER": 3
+    }
+
+In production, we'd have:
+
+    {
+        "APP_NAME": "enpyroments",
+        "LINES_TO_PRINT": 20,
+        "MODE": "prod",
+        "WELCOME_MESSAGE": "Welcome to Jurrasic Park!",
+        "SECRET_KEY": "SUPREMELY SECRET- DO NOT SHARE!!!",
+        "EMAIL_SERVER_LOGIN": "resource_account_user",
+        "EMAIL_SERVER_PASSWORD": "resource_account_password"
+    }
+
+And we can access those in the code in just a few lines:
+
+```python
+app_dir = "sample_app"
+settings_dir = "sample_settings"
+root = os.path.join(os.path.dirname(__file__), app_dir)
+
+loader = Loader(root)
+settings = loader.load_settings(settings_dir)
+```
+
+# Usage Explanation
 
 Let's say we're making an ultra-complex application that needs to print a message a certain number of times, depending on who / where our app is running. Let's say it looks something like this:
 
