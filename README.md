@@ -26,7 +26,7 @@ And that's it! No external dependencies!
 
 # Installation
 
-Install using `pip` (eventually.....)
+Install using `pip`
 
     pip install enpyronments
 
