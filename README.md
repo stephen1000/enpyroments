@@ -10,8 +10,9 @@ Enpyroments is a fully configurable tool for abstracting away the hassle of conf
 
 Here's some use cases:
 
-- Have a separate database & connection string for dev, test, and prod, with your credentials either stored in an untracked \*\_local.py file or pulled from the current environment
--
+- Have a separate database address & connection string for dev, test, and prod, with your credentials either stored in an untracked \*\_local.py in settings.DATABASE_ADDRESS and settings.DATABASE_CONNECTION_STRING
+- Configure environment variables for both dev and prod servers at startup by calling settings.save_to_environ()
+- Have emails deferred or saved as drafts instead of sent while developing and testing based on settings.SEND_MAIL
 
 # Requirements
 
