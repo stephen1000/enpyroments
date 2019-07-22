@@ -38,6 +38,13 @@ class Settings(MutableMapping):
             return val.obj
         return val
 
+    def __getattr__(self, key):
+        """ Attempts to return attributes set on self first, then on self.data """
+        try:
+            return self.data[key]
+        except AttributeError:
+            raise AttributeError(f' "{key}" is not an attribute of {type(self)}, and was not found in settings.')
+
     def __setitem__(self, key, val):
         """ Same as dict.__setitem__, but sets the value of Sensitive type elements if the current value is already
         Sensitive """
