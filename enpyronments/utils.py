@@ -22,7 +22,7 @@ class Sensitive():
     """Flags settings as sensitive, overriding their __str__ method to make accidental disclosure more difficult
     """
 
-    def __init__(self, obj, stars=10):
+    def __init__(self, obj, stars:int=10):
         self.obj = obj
 
         if stars <= 0:
