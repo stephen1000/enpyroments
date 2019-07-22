@@ -39,7 +39,7 @@ class Sensitive():
         return str(self.obj)
 
     def __repr__(self):
-        return repr(self.obj)
+        return f"Sensitive ({repr(self.obj)})"
 
     def mask(self):
         return "*" * self.stars
