@@ -22,15 +22,15 @@ class Settings(MutableMapping):
                 self.data.keys(),
                 (
                     v.mask() if isinstance(v, Sensitive) else v
-                    for v in self.values(return_obj=False)
+                    for v in self.values(extract_from_sensitive=False)
                 ),
             )
         )
 
-    def __getitem__(self, key):
+    def __getitem__(self, key, extract_from_sensitive:bool=True):
         """ same as dict.__getitem__, but extracts the value of Sensitive type elements """
         val = self.data.__getitem__(key)
-        if isinstance(val, Sensitive):
+        if extract_from_sensitive and isinstance(val, Sensitive):
             return val.obj
         return val
 
