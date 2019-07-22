@@ -62,7 +62,7 @@ class TestSensitive(unittest.TestCase):
             self.assertEqual(str(sensitive), str(val))
             
     def test_sensitive_repr(self):
-        """ Ensure that repr(Sensitive) is the smae as repr(val) """
+        """ Ensure that repr(Sensitive) doesn't raise errors """
         for val in self.vals:
             sensitive = utils.Sensitive(val)
-            self.assertEqual(repr(sensitive), repr(val))
+            repr(sensitive)

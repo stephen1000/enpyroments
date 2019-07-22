@@ -1,103 +1,54 @@
+"""Tests for the Settings class"""
 import re
-import unittest
 
 import pytest
 
 from enpyronments.settings import Sensitive, Settings
 
 
-class TestSettings(unittest.TestCase):
-    """ Test case for the Settings class. Note that the settings dict here is always constructed from the pairs yielded
-    by calling enumerate on one of self.values, self.sensitive_values, or self.all_values """
-    
-    def setUp(self):
-        """ Provide a nice battery of types in values to test Settings """
+def test_empty():
+    """ Ensure an empty object doesn't error out (shouldn't be an issue, but makes me feel better) """
 
-        def func():
-            """ Function type """
+    settings = Settings()
+    return settings
 
-        self.values = [
-            int(),
-            float(),
-            str(),
-            bytes(),
-            list(),
-            dict(),
-            set(),
-            func,
-            object(),
-        ]
-        self.sensitive_values = [Sensitive(value) for value in self.values]
-        self.all_values = [*self.values, *self.sensitive_values]
 
-    def test_empty(self):
-        """ Ensure an empty object doesn't error out (shouldn't be an issue, but makes me feel better) """
+def test_masked(test_key, test_setting, is_sensitive, actual_value):
+    """ Ensure accessing Settings.masked() elements via __getitem__ returns the underlying value when the test_key points
+    to a Sensitive object"""
 
-        settings = Settings()
-        return settings
+    masked_settings = test_setting.masked()
 
-    def test_masked(self):
-        """ Ensure accessing Settings.masked() elements via __getitem__ returns the underlying value when the key points
-         to a Sensitive object"""
+    if is_sensitive:
+        assert (
+            masked_settings.get(test_key) != actual_value
+        ), "Shouldn't get a sensitive value back from masked settings"
+        assert re.match(
+            r"\*+", masked_settings.get(test_key)
+        ), "Should get a bunch of stars back from a sensitive value in masked settings"
+    else:
+        assert masked_settings.get(test_key) == actual_value
 
-        settings = Settings(enumerate(self.sensitive_values))
 
-        for key, val in enumerate(self.values):
-            self.assertEqual(settings[key], val)
-            self.assertEqual(settings.get(key), val)
+def test_getitem(test_setting, test_key, actual_value):
+    """ Ensure Sensitive objects return their underlying value """
+    assert test_setting[test_key] == actual_value
 
-        masked_settings = settings.masked()
-        for key, val in enumerate(self.values):
-            # Make sure we didn't get back the masked value
-            self.assertNotEqual(masked_settings.get(key), val)
-            # Make sure we got back *'s instead
-            self.assertTrue(re.match(r"\*+", masked_settings.get(key)))
 
-    def assert__getitem__(self, settings):
-        """ Asserts that __getitem__  returns the actual value of settings """
-        for key, val in enumerate(self.values):
-            setting = settings[key]
-            self.assertEqual(setting, val)
+def test_get(test_setting, test_key, actual_value):
+    assert test_setting.get(test_key) == actual_value
 
-    def test___getitem___masked(self):
-        """ Ensure Sensitive objects return their underlying value """
-        settings = Settings(enumerate(self.sensitive_values))
-        self.assert__getitem__(settings)
 
-    def test___getitem___unmasked(self):
-        """ Ensure non-Sensitive objects are returned as a dict would """
-        settings = Settings(enumerate(self.values))
-        self.assert__getitem__(settings)
-       
+def test_setitem(test_setting, test_key, actual_value, is_sensitive):
+    test_setting[test_key] = actual_value
 
-    def test___setitem___masked_defined(self):
-        """ Ensure Sensitive objects when overwritten are still sensitive """
-        old_settings = Settings(enumerate(self.sensitive_values))
-        new_settings = dict(enumerate(self.sensitive_values))
-        for key, value in new_settings.items():
-            old_settings.__setitem__(key, value)
-            self.assertIsInstance(old_settings.__getitem__(key, extract_from_sensitive=False), Sensitive)
+    assert test_setting[test_key] == actual_value
 
-    def test___setitem___masked_undefined(self):
-        """ Ensure Sensitive objects return their underlying value """
-        old_settings = Settings()
-        new_settings = dict(enumerate(self.sensitive_values))
-        for key, value in new_settings.items():
-            old_settings.__setitem__(key, value)
-            self.assertIsInstance(old_settings.__getitem__(key, extract_from_sensitive=False), Sensitive)
+    if is_sensitive:
+        assert isinstance(test_setting.data[test_key], Sensitive)
 
-    def test___setitem___unmasked_defined(self):
-        """ Ensure non-Sensitive objects are returned as a dict would """
-        old_settings = Settings(enumerate(self.values))
-        new_settings = dict(enumerate(self.sensitive_values))
-        for key, value in new_settings.items():
-            old_settings.__setitem__(key, value)
-            self.assertIsInstance(old_settings.__getitem__(key, extract_from_sensitive=False), Sensitive)
 
-    def test___setitem___unmasked_undefined(self):
-        """ Ensure non-Sensitive objects are returned as a dict would """
-        old_settings = Settings()
-        new_settings = dict(enumerate(self.values))
-        for key, value in new_settings.items():
-            old_settings.__setitem__(key, value)
-            self.assertNotIsInstance(old_settings.__getitem__(key, extract_from_sensitive=False), Sensitive)
+def test_getattr(test_setting, test_key, bad_key, actual_value):
+    with pytest.raises(KeyError):
+        getattr(test_setting, bad_key)
+    assert getattr(test_setting, test_key) == actual_value
