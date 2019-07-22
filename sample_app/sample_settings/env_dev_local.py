@@ -1,4 +1,4 @@
-from utils import Sensitive
+from enpyronments.utils import Sensitive
 
 SECRET_KEY = Sensitive("hey man dont steal my secret key")
 
