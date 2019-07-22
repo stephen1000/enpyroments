@@ -78,9 +78,24 @@ class TestSettings(unittest.TestCase):
 
     def test___setitem___masked_undefined(self):
         """ Ensure Sensitive objects return their underlying value """
+        old_settings = Settings()
+        new_settings = dict(enumerate(self.sensitive_values))
+        for key, value in new_settings.items():
+            old_settings.__setitem__(key, value)
+            self.assertIsInstance(old_settings.__getitem__(key, extract_from_sensitive=False), Sensitive)
 
     def test___setitem___unmasked_defined(self):
         """ Ensure non-Sensitive objects are returned as a dict would """
+        old_settings = Settings(enumerate(self.values))
+        new_settings = dict(enumerate(self.sensitive_values))
+        for key, value in new_settings.items():
+            old_settings.__setitem__(key, value)
+            self.assertIsInstance(old_settings.__getitem__(key, extract_from_sensitive=False), Sensitive)
 
     def test___setitem___unmasked_undefined(self):
         """ Ensure non-Sensitive objects are returned as a dict would """
+        old_settings = Settings()
+        new_settings = dict(enumerate(self.values))
+        for key, value in new_settings.items():
+            old_settings.__setitem__(key, value)
+            self.assertNotIsInstance(old_settings.__getitem__(key, extract_from_sensitive=False), Sensitive)
