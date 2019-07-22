@@ -43,7 +43,7 @@ class Settings(MutableMapping):
         try:
             return self.data[key]
         except KeyError:
-            raise AttributeError(
+            raise KeyError(
                 f'"{key}" was not found in specified settings and is not an attribute of {repr(self)}.'
             )
 
