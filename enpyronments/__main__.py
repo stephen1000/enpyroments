@@ -1,7 +1,7 @@
 import json
 import os
 
-from loader import Loader
+from enpyronments.loader import Loader
 
 app_dir = "sample_app"
 settings_dir = "sample_settings"
