@@ -31,7 +31,7 @@ class Settings(MutableMapping):
             )
         )
 
-    def __getitem__(self, key, extract_from_sensitive:bool=True):
+    def __getitem__(self, key, extract_from_sensitive: bool = True):
         """ same as dict.__getitem__, but extracts the value of Sensitive type elements """
         val = self.data.__getitem__(key)
         if extract_from_sensitive and isinstance(val, Sensitive):
@@ -42,8 +42,10 @@ class Settings(MutableMapping):
         """ Attempts to return attributes set on self first, then on self.data """
         try:
             return self.data[key]
-        except AttributeError:
-            raise AttributeError(f' "{key}" is not an attribute of {type(self)}, and was not found in settings.')
+        except KeyError:
+            raise AttributeError(
+                f'"{key}" was not found in specified settings and is not an attribute of {repr(self)}.'
+            )
 
     def __setitem__(self, key, val):
         """ Same as dict.__setitem__, but sets the value of Sensitive type elements if the current value is already
