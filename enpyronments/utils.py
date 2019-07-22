@@ -24,6 +24,10 @@ class Sensitive():
 
     def __init__(self, obj, stars=10):
         self.obj = obj
+
+        if stars <= 0:
+            raise AttributeError('Stars must be greater than 0.')
+
         self.stars = stars
 
     def __str__(self):
