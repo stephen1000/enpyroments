@@ -1,6 +1,8 @@
 import re
 import unittest
 
+import pytest
+
 from enpyronments.settings import Sensitive, Settings
 
 
