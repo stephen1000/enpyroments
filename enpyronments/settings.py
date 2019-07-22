@@ -1,3 +1,7 @@
+"""
+Settings class
+"""
+
 import os
 from collections import MutableMapping
 
