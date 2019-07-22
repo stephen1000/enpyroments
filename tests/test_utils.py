@@ -59,10 +59,10 @@ class TestSensitive(unittest.TestCase):
         """ Ensure that str(Sensitive) is the same as str(val) """
         for val in self.vals:
             sensitive = utils.Sensitive(val)
-            self.assertEquals(str(sensitive), str(val))
+            self.assertEqual(str(sensitive), str(val))
             
     def test_sensitive_repr(self):
         """ Ensure that repr(Sensitive) is the smae as repr(val) """
         for val in self.vals:
             sensitive = utils.Sensitive(val)
-            self.assertEquals(repr(sensitive), repr(val))
+            self.assertEqual(repr(sensitive), repr(val))
