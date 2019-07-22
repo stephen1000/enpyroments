@@ -43,14 +43,14 @@ class Settings(MutableMapping):
         Sensitive """
         # Don't want to set a Sensitive value to a nonsensitive value, so if:
         # 1- The key we're setting is already set
-        # 2- The value we're setting isn't already sensitive
-        # 3- The value we already have is sensitive
+        # 2- The value we already have is sensitive
+        # 3- The value we're setting isn't already sensitive
         # Then we need to wrap val in Sensitive().
 
         if (
             key in self.data
-            and not isinstance(val, Sensitive)
             and isinstance(self.get(key, extract_from_sensitive=False), Sensitive)
+            and not isinstance(val, Sensitive)
         ):
             return self.data.__setitem__(key, Sensitive(val))
         return self.data.__setitem__(key, val)
@@ -89,6 +89,9 @@ class Settings(MutableMapping):
             if extract_from_sensitive and isinstance(val, Sensitive):
                 yield val.obj
             yield val
+
+    def keys(self):
+        return self.data.keys()
 
     def save_to_environ(self):
         """Saves the current state of settings to the environment via os.environ"""
