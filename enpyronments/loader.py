@@ -140,13 +140,14 @@ class Loader:
         Arguments:
             mode {str} -- name of mode to load
         """
-
         load_order = [
             self.sep.join([self.prefix]),
             self.sep.join([self.prefix, LOCAL]),
-            self.sep.join([self.prefix, mode]),
-            self.sep.join([self.prefix, mode, LOCAL]),
         ]
+        if mode:
+            load_order.append(self.sep.join([self.prefix, mode]))
+            load_order.append(self.sep.join([self.prefix, mode, LOCAL]),)
+                    
         return load_order
 
     def load_settings(self, package):
