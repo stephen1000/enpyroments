@@ -31,17 +31,20 @@ class Settings(MutableMapping):
             )
         )
 
+    def extract_from_sensitive(self, val, extract=True):
+        if extract and isinstance(val, Sensitive):
+            return val.obj
+        return val
+
     def __getitem__(self, key, extract_from_sensitive: bool = True):
         """ same as dict.__getitem__, but extracts the value of Sensitive type elements """
         val = self.data.__getitem__(key)
-        if extract_from_sensitive and isinstance(val, Sensitive):
-            return val.obj
-        return val
+        return self.extract_from_sensitive(val, extract_from_sensitive)
 
     def __getattr__(self, key):
         """ Attempts to return attributes set on self first, then on self.data """
         try:
-            return self.data[key]
+            return self.extract_from_sensitive(self.data[key])
         except KeyError:
             raise KeyError(
                 f'"{key}" was not found in specified settings and is not an attribute of {repr(self)}.'
@@ -70,7 +73,7 @@ class Settings(MutableMapping):
 
     def __iter__(self):
         """ Same as dict.__iter__ """
-        yield self.data.__iter__()
+        return self.data.__iter__()
 
     def __len__(self):
         """ Same as dict.__len__ """
@@ -79,11 +82,7 @@ class Settings(MutableMapping):
     def get(self, key, default=None, extract_from_sensitive: bool = True):
         """ Same as dict.get, but extracts the value of Sensitive type elements """
         val = self.data.get(key)
-
-        if extract_from_sensitive and isinstance(val, Sensitive):
-            return val.obj
-
-        return val
+        return self.extract_from_sensitive(val, extract_from_sensitive)
 
     def items(self, extract_from_sensitive: bool = True) -> tuple:
         """ Same as dict.items, but extracts the value of Sensitive type elements """
