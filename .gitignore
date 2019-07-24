@@ -1,7 +1,16 @@
+# Virtual environments
 .env
+
+# IDE
 .vscode
 
+# Caches
 __pycache__
 .pytest_cache
+
+# Coverage
 .coverage
 cov.xml
+
+# Built Docs
+docs/_*
