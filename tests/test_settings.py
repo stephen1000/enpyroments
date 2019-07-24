@@ -53,6 +53,8 @@ def test_getattr(test_setting, test_key, bad_key, actual_value):
     with pytest.raises(KeyError):
         getattr(test_setting, bad_key)
     assert getattr(test_setting, test_key) == actual_value
+    # make sure lower case accessors work too
+    assert getattr(test_setting, str(test_key).lower()) == actual_value
 
 
 def test_delitem(test_setting, test_key):

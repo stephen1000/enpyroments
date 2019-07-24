@@ -43,6 +43,9 @@ class Settings(MutableMapping):
 
     def __getattr__(self, key):
         """ Attempts to return attributes set on self first, then on self.data """
+        # Also lookup lowercase versions of settings
+        if key not in self.data:
+            key = str(key).upper()
         try:
             return self.extract_from_sensitive(self.data[key])
         except KeyError:
