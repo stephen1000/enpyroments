@@ -15,10 +15,6 @@ default_ext = ".py"
 default_sep = "_"
 default_builtin_pattern = r"^__(.+)__$"
 default_attribute_pattern = r"^[A-Z_0-9]+$"
-default_root = os.getcwd()
-LOCAL = "local"
-MODE = "MODE"
-
 
 def get_module_dict(module, attrs):
     """Given a module and a list of attributes to extract, return a dict of the
@@ -32,27 +28,35 @@ def get_module_dict(module, attrs):
 
 
 class Loader:
-    """A loader that follows a set resolution order to determin which environment settings will be loaded"""
+    """The settings loader.follows a set resolution order to determin which environment settings will be loaded
+
+    Keyword Arguments:
+        root {str} -- Path representing the root directory to start importing from
+
+        prefix {str} -- Prefix environment settings files will have
+
+        ext {str} -- Extension environment settings files will have
+
+        sep {str} -- Separator between environment specifiers
+
+        builtin_pattern {str} -- Regex pattern used to identify which attributes are builtins, which should be ignored
+
+        attribute_pattern {str} -- Regex pattern used to identify which attributes should be included
+    """
+    local_name = "local"
+    mode_name = "MODE"
 
     def __init__(
         self,
-        root=default_root,
+        root=None,
         prefix=default_prefix,
         ext=default_ext,
         sep=default_sep,
         builtin_pattern=default_builtin_pattern,
         attribute_pattern=default_attribute_pattern,
     ):
-        """The settings loader.
-
-        Keyword Arguments:
-            root {str} -- Path representing the root directory to start importing from (default: {os.getcwd()})
-            prefix {str} -- Prefix environment settings files will have (default: {prefix})
-            ext {str} -- Extension environment settings files will have (must be .py for now) (default: {ext})
-            sep {str} -- Separator between environment specifiers (default: {sep})
-            builtin_pattern {str} -- Regex pattern used to identify which attributes are builtins, which should be ignored (default: {builtin_pattern})
-            attribute_pattern {str} -- Regex pattern used to identify which attributes should be included (default: {attribute_pattern})
-        """
+        if root is None:
+            root = os.getcwd()
         self.root = root
         self.prefix = prefix
         self.ext = ext
@@ -99,10 +103,10 @@ class Loader:
         def get_mode_setting(name):
             """ Helper function to pull the mode setting from the settings dict """
             if name in settings_by_module:
-                return settings_by_module[name].get(MODE)
+                return settings_by_module[name].get(self.mode_name)
             return None
             
-        local_settings_module = f'{self.prefix}{self.sep}{LOCAL}'
+        local_settings_module = f'{self.prefix}{self.sep}{self.local_name}'
         local_mode = get_mode_setting(local_settings_module)
 
         if local_mode:
@@ -128,7 +132,7 @@ class Loader:
             if (
                 mode in key.split(self.sep)
                 or key == self.prefix
-                or key == self.sep.join([self.prefix, LOCAL])
+                or key == self.sep.join([self.prefix, self.local_name])
             ):
                 mode_settings[key] = val
         return mode_settings
@@ -142,11 +146,11 @@ class Loader:
         """
         load_order = [
             self.sep.join([self.prefix]),
-            self.sep.join([self.prefix, LOCAL]),
+            self.sep.join([self.prefix, self.local_name]),
         ]
         if mode:
             load_order.append(self.sep.join([self.prefix, mode]))
-            load_order.append(self.sep.join([self.prefix, mode, LOCAL]),)
+            load_order.append(self.sep.join([self.prefix, mode, self.local_name]),)
                     
         return load_order
 
