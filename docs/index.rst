@@ -9,7 +9,7 @@ Welcome to enpyronments's documentation!
 .. toctree::
     :maxdepth: 2
 
-    about <about>
+    About <about>
     Quickstart <quickstart>
     Tutorial <tutorial>
     Api reference (modules) <modules>
