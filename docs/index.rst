@@ -7,8 +7,17 @@ Welcome to enpyronments's documentation!
 ========================================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+    :maxdepth: 2
+    :caption: Contents:
+    index
+    quickstart
+    tutorial
+        tutorial/getting_s
+    modules
+        modules/loader
+        modules/settings
+        modules/utils
+   
 
 
 
