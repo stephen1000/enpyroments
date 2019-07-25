@@ -3,7 +3,7 @@ include = ["enpyronments/*"]
 
 [tool.poetry]
 name = "enpyronments"
-version = "0.1.1a3"
+version = "0.1.1a4"
 description = "A settings loading library inspired by Django and Node.js"
 authors = ["Stephen Lowery <slowery@markelcorp.com>"]
 repository = "https://github.com/stephen1000/enpyronments"
