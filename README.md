@@ -19,7 +19,7 @@ Here's some use cases:
 - Have emails deferred or saved as drafts instead of sent while developing and testing based on settings.SEND_MAIL
 
 The full documentation can be found at
-https://enpyronments.readthedocs.io/en/latest/
+https://enpyronments.readthedocs.io/en/latest/contents.html
 
 # Requirements
 
@@ -232,4 +232,4 @@ settings = loader.load_settings(settings_dir)
 # Further reading
 
 The full documentation is available at
-https://enpyronments.readthedocs.io/en/latest/
+https://enpyronments.readthedocs.io/en/latest/contents.html
