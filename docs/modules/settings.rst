@@ -7,4 +7,5 @@
 The settings module
 ===================
 
-The settings module serves one purpose- defining :class:`Settings`. 
+The settings module serves one purpose- defining :class:`Settings`.
+
