@@ -1,7 +1,7 @@
 .. module:: utils
     :synopsis: Helper functions
 
-**Source code:** :source:`enpyronments/utils.py`
+.. **Source code:** :source:`enpyronments/utils.py`
 
 
 The utils module
@@ -83,6 +83,7 @@ And now, we can safely print our settings via settings.masked():
 
 >>> json.dumps(settings.masked())
 {'MODE': 'dev', 'APIKEY': '**********'}
+
 
 Methods
 ```````

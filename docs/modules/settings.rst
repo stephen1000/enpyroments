@@ -1,7 +1,7 @@
 .. module:: settings
     :synopsis: Settings holder class
 
-**Source code:** :source:`enpyronments/settings.py`
+.. **Source code:** :source:`enpyronments/settings.py`
 
 
 The settings module
