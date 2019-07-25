@@ -10,7 +10,6 @@ Welcome to enpyronments's documentation!
     :maxdepth: 2
 
     About <about>
-    Quickstart <quickstart>
     Tutorial <tutorial>
     Api reference (modules) <modules>
 
