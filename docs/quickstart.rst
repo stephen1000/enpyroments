@@ -14,7 +14,9 @@ Install
 
 Install using pip:
 
-    > pip install enpyronments
+.. code-block::
+
+    pip install enpyronments
 
 .. note::
 
@@ -38,14 +40,37 @@ that will be used unless you explicitly overwrite them in another file).
     DEBUG = False
     TARGET_URL = 'https://xkcd.com/info.0.json'
 
-Next, add settings\*_local.py to your .gitignore. In settings, create a
-env_local.py file:
+Now, in your main script:
 
 .. code-block:: python
 
-    # settings/env_local.py
+    # main.py
 
-    MODE = 'dev'
+    from enpyronments.loader import Loader
 
-Now,
+    # if your project has a static root folder:
+    root = 'path/to/project/folder/'
 
+    # you can also determine this programatically in script files by using the
+    # python builtin variable "__file__" (see the python docs for more on this)
+    #
+    # import os
+    #
+    # root = os.path.dirname(os.path.abspath(__file__))
+
+    loader = Loader(root)
+    settings = Loader.load_settings('settings')
+
+
+All the settings defined in env.py that look like constants (UPPER_CASE) are
+available as attributes of ``settings``:
+
+>>> settings.DEBUG
+False
+
+You can also use the lower case equivalent to access a setting:
+
+>>> settings.target_url
+'https://xkcd.com/info.0.json'
+
+That should get you started! For more advanced topics, check the tutorial.
