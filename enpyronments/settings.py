@@ -9,7 +9,8 @@ from enpyronments.utils import Sensitive
 
 
 class Settings(MutableMapping):
-    """Holder object for settings."""
+    """Holder object for settings. Ensures that Sensitive values are masked when
+    masked() is invoked, and otherwise return their values"""
 
     def __init__(self, iterable=None, **kwargs):
         """ Emulate dict.__init__'s style of accepting either an iterable of pairs or a set of keyword arguments """
@@ -102,6 +103,7 @@ class Settings(MutableMapping):
             yield val
 
     def keys(self):
+        """ Returns the keys in self.data """
         return self.data.keys()
 
     def save_to_environ(self):
