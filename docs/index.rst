@@ -8,17 +8,11 @@ Welcome to enpyronments's documentation!
 
 .. toctree::
     :maxdepth: 2
-    :caption: Contents:
-    index
-    quickstart
-    tutorial
-        tutorial/getting_started
-        tutorial/local_settings
-        tutorial/mode_settings
-    modules
-        modules/loader
-        modules/settings
-        modules/utils
+
+    about <about>
+    Quickstart <quickstart>
+    Tutorial <tutorial>
+    Api reference (modules) <modules>
 
 Overview
 ========
