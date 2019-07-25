@@ -24,10 +24,14 @@ class UsePath():
 
 
 class Sensitive():
-    """Flags settings as sensitive, overriding their __str__ method to make accidental disclosure more difficult
-    """
+    """ Flags a setting as sensitive, indicating to the Settings object that
+    this setting should be hidden when ``Settings.masked`` is invoked. """
 
     def __init__(self, obj, stars:int=10):
+        """ Create a new ``Sensitive`` instance around ``obj``. You may optionally
+        pass stars=(int > 0) the number of asterisks to display when
+        Settings.masked is invoked (default 10). """
+
         self.obj = obj
 
         if stars <= 0:
@@ -36,10 +40,14 @@ class Sensitive():
         self.stars = stars
 
     def __str__(self):
+        """ Returns the str() of the wrapped object """
         return str(self.obj)
 
     def __repr__(self):
+        """ Returns "Sensitive: " and the repr() of the wrapped object """
         return f"Sensitive ({repr(self.obj)})"
 
     def mask(self):
+        """ Returns the masked value of the object (a str of asterisks with 
+        length equal to ``self.stars``)"""
         return "*" * self.stars

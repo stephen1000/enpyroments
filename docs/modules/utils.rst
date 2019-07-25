@@ -43,17 +43,19 @@ Used to import settings modules without affecting anything that runs after.
 Methods
 ```````
 
-.. method:: UsePath.__init__(path)
+.. autoclass:: enpyronments.utils.UsePath
 
-    Saves ``path`` to the UsePath instance
+    .. method:: UsePath.__init__(path)
 
-.. method:: UsePath.__enter__()
+        Saves ``path`` to the UsePath instance
 
-    Appends ``path`` to ``sys.path``, at index 0.
+    .. method:: UsePath.__enter__()
 
-.. method:: UsePath.__exit__()
+        Appends ``path`` to ``sys.path``, at index 0.
 
-    Removes the item at ``sys.path``'s index 0 (should be ``path``).
+    .. method:: UsePath.__exit__()
+
+        Removes the item at ``sys.path``'s index 0 (should be ``path``).
 
 
 Sensitive
@@ -98,24 +100,9 @@ And now, we can safely print our settings via settings.masked():
 >>> json.dumps(settings.masked())
 {'MODE': 'dev', 'APIKEY': '**********'}
 
-
 Methods
 ```````
 
-.. method:: Sensitive.__init__(obj, stars=10)
+.. autoclass:: enpyronments.utils.Sensitive
+    :members: mask, __init__, __str__, __repr__
 
-    Create a new ``Sensitive`` instance around ``obj``. You may optionally
-    pass stars = <int > 0> the number of asterisks to display when
-    Settings.masked is invoked (default 10).
-
-.. method:: Sensitive.__str__()
-
-    Returns the wrapped object's ``__str__()``.
-
-.. method:: Sensitive.__repr__()
-
-    Returns "Sensitive :" and the ``__repr__()`` of the wrapped object.
-
-.. method:: Sensitive.mask()
-
-    Returns a string containing a number of asterisks equal to ``stars``
