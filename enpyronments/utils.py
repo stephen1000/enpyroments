@@ -4,7 +4,6 @@ Helper classes
 
 
 import sys
-from contextlib import contextmanager
 
 
 class UsePath():
@@ -14,12 +13,15 @@ class UsePath():
     """
 
     def __init__(self, path):
+        """ Saves ``path`` to the UsePath instance """
         self.path = path
 
     def __enter__(self):
+        """ Appends ``path`` to ``sys.path``, at index 0 (the start) """
         sys.path.insert(0, self.path)
 
     def __exit__(self, *args):
+        """ Removes the item at ``sys.path``'s index 0 (should be ``path``). """
         sys.path.pop(0)
 
 

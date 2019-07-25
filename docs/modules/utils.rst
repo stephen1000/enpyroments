@@ -44,19 +44,7 @@ Methods
 ```````
 
 .. autoclass:: enpyronments.utils.UsePath
-
-    .. method:: UsePath.__init__(path)
-
-        Saves ``path`` to the UsePath instance
-
-    .. method:: UsePath.__enter__()
-
-        Appends ``path`` to ``sys.path``, at index 0.
-
-    .. method:: UsePath.__exit__()
-
-        Removes the item at ``sys.path``'s index 0 (should be ``path``).
-
+    :members: __init__, __enter__, __exit__
 
 Sensitive
 ---------
