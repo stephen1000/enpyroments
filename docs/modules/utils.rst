@@ -19,12 +19,26 @@ currently 2 classes:
 UsePath
 -------
 
-``UsePath`` is a Context Manager that temporarilly places a path at the start 
-of ``sys.path``.
+``UsePath`` is a Context Manager that temporarilly places a path at the start
+of ``sys.path``. For example:
+
+.. code-block:: python
+
+    from enpyronments.utils import UsePath
+
+    # Let's pick a path to a module that isn't already on sys.path
+    module_path = 'path/to/some/module'
 
 
-::autoclass:utils.UsePath
+    # Right now, module_path isn't on sys.path
 
+    with UsePath(module_path):
+        # Here, module_path is the first item on sys.path
+        import module_name as cool_module
+
+    # And now, module_path is no long on sys.path
+
+Used to import settings modules without affecting anything that runs after.
 
 Methods
 ```````
