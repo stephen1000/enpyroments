@@ -18,6 +18,9 @@ Here's some use cases:
 - Configure environment variables for both dev and prod servers at startup by calling settings.save_to_environ()
 - Have emails deferred or saved as drafts instead of sent while developing and testing based on settings.SEND_MAIL
 
+The full documentation can be found at
+https://enpyronments.readthedocs.io/en/latest/
+
 # Requirements
 
 - Python (3.6, 3.7)
@@ -228,4 +231,5 @@ settings = loader.load_settings(settings_dir)
 
 # Further reading
 
-I'm working on it! Check back here for a link to wherever the full documentation lands.
+The full documentation is available at
+https://enpyronments.readthedocs.io/en/latest/
