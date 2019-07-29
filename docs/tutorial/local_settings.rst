@@ -84,8 +84,8 @@ values Sensitive when retrieved:
     USERNAME = 'my_username'
     PASSSWORD = Sensisitive('my_password')
 
-When printing settings, invoke the :py:class:`settings.Settings.masked` method
-to get mask all sensitive values:
+When printing settings, invoke the :py:meth:`masked` method to get a dict with
+all sensitive values masked:
 
 >>> print(settings.masked())
 {'USERNAME': 'my_username', 'PASSWORD': '**********'}
