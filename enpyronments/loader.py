@@ -36,8 +36,6 @@ class Loader:
         attribute_pattern {str} -- Regex pattern used to identify which attributes should be included
     """
 
-    
-
     def __init__(
         self,
         root,
