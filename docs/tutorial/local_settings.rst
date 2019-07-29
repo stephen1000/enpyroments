@@ -23,8 +23,8 @@ couple ways-
     USERNAME = input('Username: ')
     PASSWORD = input('Password: ')
 
-    2. Set an environment variable in your terminal (varies by Operating system
-    ), then access via :py:attr:`os.environ`:
+    2. Set an environment variable in your terminal (varies by Operating
+    system), then access via :py:attr:`os.environ`:
 
 .. code-block:: python
 
