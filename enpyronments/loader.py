@@ -39,6 +39,7 @@ class Loader:
 
     def __init__(
         self,
+        root,
         prefix=default_prefix,
         ext=default_ext,
         sep=default_sep,
