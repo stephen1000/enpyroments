@@ -15,6 +15,8 @@ default_ext = ".py"
 default_sep = "_"
 default_builtin_pattern = r"^__(.+)__$"
 default_attribute_pattern = r"^[A-Z_0-9]+$"
+default_local_name = "local"
+default_mode_name = "MODE"
 
 
 class Loader:
@@ -34,8 +36,7 @@ class Loader:
         attribute_pattern {str} -- Regex pattern used to identify which attributes should be included
     """
 
-    local_name = "local"
-    mode_name = "MODE"
+    
 
     def __init__(
         self,
@@ -45,6 +46,8 @@ class Loader:
         sep=default_sep,
         builtin_pattern=default_builtin_pattern,
         attribute_pattern=default_attribute_pattern,
+        mode=default_mode_name,
+        local_name=default_local_name,
     ):
         self.root = root
         self.prefix = prefix
@@ -52,6 +55,8 @@ class Loader:
         self.sep = sep
         self.builtin_pattern = builtin_pattern
         self.attribute_pattern = attribute_pattern
+        self.mode = mode
+        self.local_name = local_name
 
     def find_modules(self, package):
         """Searches for modules in package that match the glob pattern 
