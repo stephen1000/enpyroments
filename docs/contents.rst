@@ -41,7 +41,6 @@ Roadmap
 
 Roughly in order-
 
-    * More and better tests
     * LocalOnly object (for indicating that a setting must be provided locally)
     * Tox testing
     * CLI configuration interface (add/change/remove settings/files)
