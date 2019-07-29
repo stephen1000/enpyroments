@@ -34,6 +34,10 @@ class Loader:
         builtin_pattern {str} -- Regex pattern used to identify which attributes are builtins, which should be ignored
 
         attribute_pattern {str} -- Regex pattern used to identify which attributes should be included
+
+        mode {str} -- Name of setting indicating mode
+
+        local_name -- Suffix used to indicate local settings
     """
 
     def __init__(
