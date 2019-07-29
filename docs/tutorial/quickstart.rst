@@ -90,7 +90,7 @@ If you want to run a script (say, a flask app) with these settings as
 environment variables, it's as easy as calling a function before you
 initialize your application:
 
->>> settings.save_to_envrion()``
+>>> settings.save_to_envrion()
 
 
 Hiding sensitive values
