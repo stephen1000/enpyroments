@@ -5,7 +5,7 @@ Loader class
 import os
 import re
 from glob import glob
-from importlib import import_module
+from importlib import import_module, reload
 
 from enpyronments.settings import Settings
 from enpyronments.utils import UsePath
@@ -15,16 +15,6 @@ default_ext = ".py"
 default_sep = "_"
 default_builtin_pattern = r"^__(.+)__$"
 default_attribute_pattern = r"^[A-Z_0-9]+$"
-
-def get_module_dict(module, attrs):
-    """Given a module and a list of attributes to extract, return a dict of the
-    attributes and their values
-    
-    Arguments:
-        module {module} -- Module to extract attributes from
-        attrs {iterable} -- Iterable of attribute names to extract
-    """
-    return dict((attr, getattr(module, attr)) for attr in attrs)
 
 
 class Loader:
@@ -43,6 +33,7 @@ class Loader:
 
         attribute_pattern {str} -- Regex pattern used to identify which attributes should be included
     """
+
     local_name = "local"
     mode_name = "MODE"
 
@@ -75,7 +66,21 @@ class Loader:
         with UsePath(self.root):
             for module_path in glob(pattern):
                 module_name = module_path.split(os.path.sep)[-1].replace(self.ext, "")
-                yield import_module(f"{package}.{module_name}")
+                module = import_module(f"{package}.{module_name}")
+                # Reload module, to ensure same-named packages don't interfere
+                self.refresh_module(module)
+                name = module.__name__.split(".")[-1]
+                module_dict = dict(self.get_module_attrs(module))
+                yield name, module_dict
+
+    def refresh_module(self, module):
+        """ Imports current settings from a module name... by force """
+        keys = list(module.__dict__.keys())
+        for key in keys:
+            if not re.match(self.builtin_pattern, key):
+                delattr(module, key)
+        reload(module)
+        return module
 
     def get_module_attrs(self, module):
         """Given a module object, extract the names of all attributes that match attribute_pattern,
@@ -84,15 +89,14 @@ class Loader:
         Arguments:
             module {module} -- The module to extract attributes of
         """
-        keys = module.__dict__.keys()
-        for key in keys:
+        for key, val in module.__dict__.copy().items():
             # skip over attributes that look like builtins
             if re.match(self.builtin_pattern, key):
                 continue
             # skip any attributes that don't look like our regex
             if not re.match(self.attribute_pattern, key):
                 continue
-            yield key
+            yield key, val
 
     def get_mode(self, settings_by_module):
         """Given a dictionary of settings, determine what mode to extract settings from
@@ -100,21 +104,22 @@ class Loader:
         Arguments:
             settings_by_module {dict} -- settings dictionary
         """
+
         def get_mode_setting(name):
             """ Helper function to pull the mode setting from the settings dict """
             if name in settings_by_module:
                 return settings_by_module[name].get(self.mode_name)
             return None
-            
-        local_settings_module = f'{self.prefix}{self.sep}{self.local_name}'
+
+        local_settings_module = f"{self.prefix}{self.sep}{self.local_name}"
         local_mode = get_mode_setting(local_settings_module)
 
         if local_mode:
             return local_mode
 
-        global_settings_module = f'{self.prefix}'
+        global_settings_module = f"{self.prefix}"
         global_mode = get_mode_setting(global_settings_module)
-        
+
         return global_mode
 
     def get_mode_settings(self, mode, settings_by_module):
@@ -150,8 +155,8 @@ class Loader:
         ]
         if mode:
             load_order.append(self.sep.join([self.prefix, mode]))
-            load_order.append(self.sep.join([self.prefix, mode, self.local_name]),)
-                    
+            load_order.append(self.sep.join([self.prefix, mode, self.local_name]))
+
         return load_order
 
     def load_settings(self, package):
@@ -161,14 +166,11 @@ class Loader:
         Arguments:
             package {str} -- package name
         """
-        modules = self.find_modules(package)
 
         settings_by_module = {}
-        for module in modules:
-            settings_by_module[module.__name__.split('.')[-1]] = get_module_dict(
-                module, self.get_module_attrs(module)
-            )
-        
+        for module_name, module in self.find_modules(package):
+            settings_by_module[module_name] = module
+
         mode = self.get_mode(settings_by_module)
         mode_settings = self.get_mode_settings(mode, settings_by_module)
 
