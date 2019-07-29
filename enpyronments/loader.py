@@ -39,15 +39,12 @@ class Loader:
 
     def __init__(
         self,
-        root=None,
         prefix=default_prefix,
         ext=default_ext,
         sep=default_sep,
         builtin_pattern=default_builtin_pattern,
         attribute_pattern=default_attribute_pattern,
     ):
-        if root is None:
-            root = os.getcwd()
         self.root = root
         self.prefix = prefix
         self.ext = ext
