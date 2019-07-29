@@ -19,7 +19,7 @@ except ImportError:
 
 def get_settings():
     root = os.path.dirname(os.path.abspath(__file__))
-    settings_dir = "sample_settings"
+    settings_dir = "settings"
 
     settings = Loader(root).load_settings(settings_dir)
 
