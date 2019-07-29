@@ -1,3 +1,4 @@
+import json
 import logging
 import os
 import sys
@@ -27,11 +28,14 @@ def get_settings():
 
 def main():
     settings = get_settings()
+    logger.info('Running app "%s"', settings.app_name)
     if settings.debug:
         logger.info("---DEBUG MODE---")
     
     for _ in range(settings.lines_to_print):
         logger.info(settings.welcome_message)
+
+    logger.debug('Settings (masked): %s', json.dumps(settings.masked()))
 
 
 if __name__ == "__main__":
