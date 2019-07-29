@@ -90,6 +90,8 @@ to get mask all sensitive values:
 >>> print(settings.masked())
 {'USERNAME': 'my_username', 'PASSWORD': '**********'}
 
+And that's it!
+
 .. note::
 
     By design, accessing values from a settings object directly will always
