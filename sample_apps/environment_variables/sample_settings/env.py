@@ -1,4 +1,10 @@
-DEBUG = True
+import os
+
+eviron_debug = os.environ.get('DEBUG')
+if eviron_debug is not None:
+    DEBUG = eviron_debug
+else:
+    DEBUG = True
 
 APP_NAME = "enpyronments"
 
