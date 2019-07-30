@@ -113,7 +113,7 @@ class Loader:
         def get_mode_setting(name):
             """ Helper function to pull the mode setting from the settings dict """
             if name in settings_by_module:
-                return settings_by_module[name].get(self.mode_name)
+                return settings_by_module[name].get(self.mode)
             return None
 
         local_settings_module = f"{self.prefix}{self.sep}{self.local_name}"
