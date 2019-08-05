@@ -48,7 +48,7 @@ class Loader:
         sep=default_sep,
         builtin_pattern=default_builtin_pattern,
         attribute_pattern=default_attribute_pattern,
-        mode=default_mode_name,
+        mode_setting_name=default_mode_name,
         local_name=default_local_name,
     ):
         self.root = root
@@ -57,7 +57,7 @@ class Loader:
         self.sep = sep
         self.builtin_pattern = builtin_pattern
         self.attribute_pattern = attribute_pattern
-        self.mode = mode
+        self.mode_setting_name = mode
         self.local_name = local_name
 
     def find_modules(self, package):
@@ -113,7 +113,7 @@ class Loader:
         def get_mode_setting(name):
             """ Helper function to pull the mode setting from the settings dict """
             if name in settings_by_module:
-                return settings_by_module[name].get(self.mode)
+                return settings_by_module[name].get(self.mode_setting_name)
             return None
 
         local_settings_module = f"{self.prefix}{self.sep}{self.local_name}"
