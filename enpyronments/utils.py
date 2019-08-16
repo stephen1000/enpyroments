@@ -53,3 +53,15 @@ class Sensitive():
         """ Returns the masked value of the object (a str of asterisks with 
         length equal to ``self.stars``)"""
         return "*" * self.stars
+
+
+class LocalOnly():
+    """Raises a NotImplementedError unless the variable has been explicitly defined 
+    elsewhere. Useful for things like IP addresses that will be different in every enpyronment.
+    """
+
+    def __init__(self, name:str="No name specified"):
+        self.name = name
+
+    def __str__(self):
+        raise NotImplementedError(f"You must define this variable ({self.name}) in your *_local.py enpyronments file before it can be used!")
